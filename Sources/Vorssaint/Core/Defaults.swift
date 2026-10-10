@@ -450,6 +450,7 @@ enum DefaultsKey {
     static let monitorNetAddresses = "monitorNetAddresses"
     static let monitorNetTest = "monitorNetTest"
     static let monitorDataUsage = "monitorDataUsage"
+    static let monitorDataUsageEnabled = "monitorDataUsageEnabled"
     static let monitorDiskUsage = "monitorDiskUsage"
     static let monitorDiskActivity = "monitorDiskActivity"
     static let monitorDiskSMART = "monitorDiskSMART"
@@ -1622,6 +1623,8 @@ enum Defaults {
         DefaultsKey.monitorNetSpeed: true,
         DefaultsKey.monitorNetApps: true,
         DefaultsKey.monitorNetTotals: true,
+        DefaultsKey.monitorDataUsage: true,
+        DefaultsKey.monitorDataUsageEnabled: true,
         DefaultsKey.monitorNetAddresses: true,
         DefaultsKey.monitorNetTest: true,
         DefaultsKey.monitorDiskUsage: true,

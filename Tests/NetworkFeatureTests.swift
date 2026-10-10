@@ -448,6 +448,31 @@ enum NetworkFeatureTests {
                "monitor wakes every tick in the foreground")
         suite.expect(MonitorSamplingPolicy.wakeTicks(for: [], intervalSeconds: 2, foreground: false) == 1,
                "monitor wake cadence defaults to every tick with no needs")
+
+        // MARK: Total Data Usage Toggle Defaults Test
+
+        suite.expect(Defaults.registeredDefaults.keys.contains(DefaultsKey.monitorDataUsageEnabled),
+               "monitorDataUsageEnabled key should be registered in Defaults")
+        suite.expect(Defaults.registeredDefaults[DefaultsKey.monitorDataUsageEnabled] as? Bool == true,
+               "monitorDataUsageEnabled should default to true")
+
+        // MARK: Total Data Usage Toggle Functionality Test
+
+        let toggleTestDefaults = UserDefaults(suiteName: "com.vorssaint.tests.networkToggle")!
+        toggleTestDefaults.removePersistentDomain(forName: "com.vorssaint.tests.networkToggle")
+
+        suite.expect(toggleTestDefaults.bool(forKey: DefaultsKey.monitorDataUsageEnabled) == true,
+               "Total Data Usage toggle should default to true in fresh UserDefaults")
+
+        toggleTestDefaults.set(false, forKey: DefaultsKey.monitorDataUsageEnabled)
+        suite.expect(toggleTestDefaults.bool(forKey: DefaultsKey.monitorDataUsageEnabled) == false,
+               "Total Data Usage toggle should be settable to false")
+
+        toggleTestDefaults.set(true, forKey: DefaultsKey.monitorDataUsageEnabled)
+        suite.expect(toggleTestDefaults.bool(forKey: DefaultsKey.monitorDataUsageEnabled) == true,
+               "Total Data Usage toggle should be settable back to true")
+
+        toggleTestDefaults.removePersistentDomain(forName: "com.vorssaint.tests.networkToggle")
         suite.expect(MonitorSamplingPolicy.sampleStride(for: .connectedDevices, intervalSeconds: 2, foreground: false) == 5,
                "connected devices sampling is throttled in background")
         suite.expect(MonitorSamplingPolicy.sampleStride(for: .connectedDevices, intervalSeconds: 2, foreground: true) == 1,
